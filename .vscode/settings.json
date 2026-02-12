@@ -1,11 +1,11 @@
 {
   "C_Cpp.intelliSenseEngine": "default",
   "idf.openOcdConfigs": [
-    "board/esp32-wrover-kit-3.3v.cfg"
+    "board/esp32s3-builtin.cfg"
   ],
   "idf.currentSetup": "C:/Espressif/frameworks/esp-idf-v5.3.1/",
   "idf.customExtraVars": {
-    "IDF_TARGET": "esp32"
+    "IDF_TARGET": "esp32s3"
   },
   "clangd.path": "C:\\Espressif\\tools\\esp-clang\\16.0.1-fe4f10a809\\esp-clang\\bin\\clangd.exe",
   "clangd.arguments": [
