@@ -6,17 +6,9 @@
 #include "stm32_configure.h"
 
 static const char *TAG = "MAIN_APP";
- 
-
-
-// codigo de prueba para ver que el sp32 haga lo que tiene que hacer
-
-
-
-
-
 
 void app_main(void) {
+   
     // 1. Cargar Configuración
     system_pin_config_t my_config = DEFAULT_HARDWARE_CONFIG();
 
