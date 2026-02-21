@@ -1,17 +1,3 @@
 {
-  "C_Cpp.intelliSenseEngine": "default",
-  "idf.openOcdConfigs": [
-    "board/esp32s3-builtin.cfg"
-  ],
-  "idf.port": "detect",
-  "idf.currentSetup": "/home/eda2639/.espressif/v5.5.2/esp-idf",
-  "idf.customExtraVars": {
-    "IDF_TARGET": "esp32s3"
-  },
-  "clangd.path": "/home/eda2639/.espressif/tools/esp-clang/esp-19.1.2_20250312/esp-clang/bin/clangd",
-  "clangd.arguments": [
-    "--background-index",
-    "--query-driver=**",
-    "--compile-commands-dir=/home/eda2639/mcpwm_bdc_speed_control/build"
-  ]
+  "idf.currentSetup": "C:\\esp\\v5.5.2\\esp-idf"
 }

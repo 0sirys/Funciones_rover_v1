@@ -4,17 +4,11 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include "bdc_motor.h"
-#include "esp_err.h"
 #include "esp_log.h"
-#include "esp_timer.h"
-#include "freertos/FreeRTOS.h"
-#include "freertos/projdefs.h"
 #include "freertos/queue.h"
 #include "freertos/task.h"
-#include "sdkconfig.h"
+#include "motor.h"
 #include <stdbool.h>
-#include <stdio.h>
 
 static const char *TAG = "example";
 
@@ -37,47 +31,9 @@ static const char *TAG = "example";
 #define BDC_MCPWM_MOTOR3_R 37
 #define BDC_MCPWM_MOTOR3_D 38
 
-typedef struct {
-  uint8_t id;
-  bdc_motor_handle_t motor;
-  esp_timer_handle_t stop_timer;
-} motor_control_context_t;
-
-static void motor_stop_callback(void *args) {
-  motor_control_context_t *ctx = (motor_control_context_t *)args;
-  bdc_motor_brake(ctx->motor);
-}
-void Corre_forest_async(motor_control_context_t *ctx, uint32_t speed,
-                        uint64_t timestop, bool forward) {
-  esp_timer_stop(ctx->stop_timer);
-
-  ESP_LOGI("MOTOR_RUN", "Motor %d Start-> Speed:%lu, Time:%llu ms", ctx->id,
-           speed, ctx->stop_timer);
-  bdc_motor_enable(ctx->motor);
-
-  if (!forward) {
-    bdc_motor_reverse(ctx->motor);
-  } else {
-    bdc_motor_forward(ctx->motor);
-  }
-  ESP_ERROR_CHECK(esp_timer_start_once(ctx->stop_timer, timestop * 1000));
-}
-
-void init_motor_timer(motor_control_context_t *ctx) {
-  const esp_timer_create_args_t timer_args = {.callback = &motor_stop_callback,
-                                              .arg = (void *)ctx,
-                                              .name = "Motor_Stop_Timer"};
-  ESP_ERROR_CHECK(esp_timer_create(&timer_args, &ctx->stop_timer));
-}
+motor_handle_t motor[3];
 
 void app_main(void) {
-
-  static motor_control_context_t motor1_ctx = {.id = 1};
-
-  static motor_control_context_t motor2_ctx = {.id = 2};
-
-  static motor_control_context_t motor3_ctx = {.id = 3};
-  // Inicializacion de motores//
 
   ESP_LOGI(TAG, "Inicializando configuracion de motores");
   bdc_motor_config_t motor1_config = {
@@ -128,16 +84,5 @@ void app_main(void) {
   //----------------------------------------------------
   // TESTE
   //----------------------------------------------------
-  Corre_forest_async(&motor1_ctx, 300, 2000, true);
-  
-  vTaskDelay(pdMS_TO_TICKS(1000));
-
-
-  Corre_forest_async(&motor2_ctx, 300, 2000, true);
-
-  vTaskDelay(pdMS_TO_TICKS(1000));
-  
-  Corre_forest_async(&motor3_ctx, 300, 2000, true);
-    ESP_LOGI(TAG, "TEST CORRECTO...");
-  
+  ESP_LOGI(TAG, "TEST CORRECTO...");
 }
